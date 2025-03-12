@@ -1,21 +1,24 @@
 package com.shopsphere.inventory_service.controller;
 
+import com.shopsphere.inventory_service.dto.InventoryResponse;
 import com.shopsphere.inventory_service.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/inventory")
 @RequiredArgsConstructor
 public class InventoryController {
 
-    private InventoryService inventoryService;
+    private final InventoryService inventoryService;
 
-    @GetMapping("/{skuCode}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public boolean isInStock(@PathVariable ("skucode") String skuCode){
+    public List<InventoryResponse> isInStock(@RequestParam List<String> skuCodeList){
 
-        return inventoryService.isInStock(skuCode);
+        return inventoryService.isInStock(skuCodeList);
     }
 }
